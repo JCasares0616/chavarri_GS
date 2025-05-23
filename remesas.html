@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Enviar Remesa - Chavarri Global Services</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+      padding-bottom: 60px;
+    }
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #0055cc;
+      padding: 10px 0;
+      text-align: center;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    h2 {
+      color: #003366;
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input, select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      width: 100%;
+    }
+    .prefijo-telefono {
+      display: flex;
+      align-items: center;
+    }
+    .prefijo-telefono span {
+      background: #eee;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-right: none;
+      border-radius: 6px 0 0 6px;
+    }
+    .prefijo-telefono input {
+      border-radius: 0 6px 6px 0;
+      border-left: none;
+      flex-grow: 1;
+    }
+    .cambio {
+      background: #e8f4ff;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-size: 15px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .boton {
+      margin-top: 20px;
+      background-color: #0055cc;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .resultado {
+      background: #f0fff0;
+      padding: 15px;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 10px;
+      display: none;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: -10px;
+    }
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>CHAVARRI GLOBAL SERVICES</h1>
+</header>
+
+<nav>
+  <a href="index.html">Inicio</a>
+  <a href="sobre.html">Sobre Nosotros</a>
+  <a href="contacto.html">Contáctenos</a>
+</nav>
+
+<main>
+  <h2>Enviar Remesa (Desde USA)</h2>
+
+  <div class="cambio">
+    <strong>Tipos de cambio actuales desde USA:</strong><br/>
+    - Por cada <strong>110 USD</strong>, se entregan <strong>100 USD físicos</strong> en Cuba<br/>
+    - <strong>100 Zelle</strong> equivalen a <strong>100 MLC</strong><br/>
+    - <strong>100 USD</strong> equivalen a <strong>34,500 CUP</strong><br/>
+    - De <strong>20 a 50 USD</strong> se descuenta <strong>5 USD</strong> de comisión en USD físicos
+  </div>
+
+  <form id="remesaForm">
+    <div>
+      <label for="pais">País desde el que envía:</label>
+      <select id="pais" disabled>
+        <option value="USA" selected>Estados Unidos (+1)</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="telefono">Teléfono del remitente:</label>
+      <div class="prefijo-telefono">
+        <span>+1</span>
+        <input type="tel" id="telefono" maxlength="10" pattern="[0-9]{10}" title="Solo números. Ej: 3051234567" required />
+      </div>
+    </div>
+
+    <div>
+      <label for="nombre">Nombre del remitente:</label>
+      <input type="text" id="nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]{3,50}" title="Solo letras y espacios. Mínimo 3 caracteres." required />
+    </div>
+
+    <div>
+      <label for="monto">Cantidad a enviar (USD):</label>
+      <input type="number" id="monto" min="20" max="9999" required />
+      <div id="errorMonto" class="error"></div>
+    </div>
+
+    <div class="resultado" id="resultado"></div>
+
+    <button type="submit" class="boton">Enviar por WhatsApp</button>
+  </form>
+</main>
+
+<footer>
+  <p>&copy; 2025 Chavarri GS. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+  const inputNombre = document.getElementById("nombre");
+  const inputTelefono = document.getElementById("telefono");
+  const inputMonto = document.getElementById("monto");
+  const resultado = document.getElementById("resultado");
+  const errorMonto = document.getElementById("errorMonto");
+
+  inputNombre.addEventListener("input", () => {
+    inputNombre.value = inputNombre.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ ]/g, "");
+  });
+
+  inputTelefono.addEventListener("input", () => {
+    inputTelefono.value = inputTelefono.value.replace(/[^0-9]/g, "");
+  });
+
+  inputMonto.addEventListener("input", () => {
+    inputMonto.value = inputMonto.value.replace(/[^0-9]/g, "");
+    calcular();
+  });
+
+  function calcular() {
+    const monto = parseFloat(inputMonto.value);
+
+    if (isNaN(monto)) {
+      resultado.style.display = "none";
+      return;
+    }
+
+    if (monto < 20) {
+      resultado.style.display = "none";
+      errorMonto.textContent = "El mínimo permitido es 20 USD.";
+      return;
+    } else {
+      errorMonto.textContent = "";
+    }
+
+    let usdFisico = Math.floor((monto / 110) * 100);
+
+    if (monto >= 20 && monto <= 50) {
+      usdFisico -= 5;
+    }
+
+    const mlc = monto;
+    const cup = monto * 345;
+
+    resultado.style.display = "block";
+    resultado.innerHTML = `
+      <strong>Resultados:</strong><br/>
+      • Entrega en USD físicos: <strong>${usdFisico} USD</strong><br/>
+      • Equivalente en MLC (Zelle): <strong>${mlc} MLC</strong><br/>
+      • Equivalente en CUP: <strong>${cup.toLocaleString()} CUP</strong>
+    `;
+  }
+
+  document.getElementById("remesaForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    calcular();
+
+    const nombre = inputNombre.value.trim();
+    const telefono = inputTelefono.value.trim();
+    const monto = parseFloat(inputMonto.value);
+
+    if (monto < 20 || !nombre || !telefono) return;
+
+    let usdFisico = Math.floor((monto / 110) * 100);
+    if (monto >= 20 && monto <= 50) {
+      usdFisico -= 5;
+    }
+
+    const mlc = monto;
+    const cup = monto * 345;
+
+    const mensaje = encodeURIComponent(
+      `Hola, soy ${nombre}, número +1${telefono}. Deseo enviar ${monto} USD desde USA. ¿Cuánto se entregaría en Cuba?\n\nUSD físicos: ${usdFisico} | MLC: ${mlc} | CUP: ${cup}`
+    );
+
+    const url = `https://wa.me/5353143050?text=${mensaje}`;
+    window.open(url, "_blank");
+  });
+</script>
+
+</body>
+</html>
