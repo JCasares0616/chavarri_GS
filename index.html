@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chavarri Global Services</title>
   <style>
     body {
@@ -11,17 +11,28 @@
       padding: 0;
       background-color: #f4f4f4;
     }
+
     header {
       background-color: #003366;
       color: white;
       text-align: center;
       padding: 20px 0;
+      position: relative;
     }
+
+    header img {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      height: 40px;
+    }
+
     nav {
       background-color: #0055cc;
       text-align: center;
       padding: 10px 0;
     }
+
     nav a {
       color: white;
       margin: 0 15px;
@@ -29,36 +40,42 @@
       font-weight: bold;
       font-size: 16px;
     }
+
     main {
       max-width: 1200px;
       margin: 30px auto;
       padding: 20px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
     }
+
     .servicio {
       background: white;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      padding: 30px;
+      padding: 20px;
       text-align: center;
     }
+
     .servicio img {
       width: 100%;
-      max-height: 220px;
+      max-height: 200px;
       object-fit: cover;
       border-radius: 10px;
     }
+
     .servicio h2 {
       font-size: 22px;
       margin: 15px 0;
       color: #003366;
     }
+
     .servicio p {
       font-size: 16px;
       margin-bottom: 20px;
     }
+
     .servicio a {
       background-color: #0055cc;
       color: white;
@@ -68,6 +85,7 @@
       font-weight: bold;
       display: inline-block;
     }
+
     footer {
       background-color: #003366;
       color: white;
@@ -79,6 +97,7 @@
 </head>
 <body>
   <header>
+    <img src="img/logo_icono_sin_fondo.png" alt="Logo" />
     <h1>CHAVARRI GLOBAL SERVICES</h1>
   </header>
   <nav>
