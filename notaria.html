@@ -1,291 +1,150 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Notaría - Chavarri Global Services</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Servicios Notariales - Chavarri Global Services</title>
   <style>
-    * { box-sizing: border-box; }
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #f4f4f4;
-    }
-    header {
-      background-color: #003366;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    nav {
-      background-color: #0055cc;
-      padding: 10px;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    main {
-      max-width: 800px;
-      margin: 30px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    h2 {
-      text-align: center;
-      color: #003366;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    label {
-      font-weight: bold;
-    }
-    input, select {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-      width: 100%;
-    }
-    .telefono {
-      display: flex;
-      align-items: center;
-    }
-    .telefono span {
-      padding: 10px;
-      background: #eee;
-      border: 1px solid #ccc;
-      border-right: none;
-      border-radius: 6px 0 0 6px;
-    }
-    .telefono input {
-      border-radius: 0 6px 6px 0;
-      border-left: none;
-      flex: 1;
-    }
-    .row {
-      display: flex;
-      gap: 10px;
-    }
-    .row > div {
-      flex: 1;
-    }
-    .resumen {
-      background: #f0f0f0;
-      padding: 15px;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-    .boton {
-      background-color: #0055cc;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .eliminar {
-      margin-left: 10px;
-      background: red;
-      color: white;
-      border: none;
-      padding: 4px 8px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    footer {
-      background-color: #003366;
-      color: white;
-      text-align: center;
-      padding: 15px 0;
-      margin-top: 40px;
-    }
+    body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+    header { background-color: #003366; color: white; text-align: center; padding: 20px; }
+    nav { background-color: #0055cc; text-align: center; padding: 10px; }
+    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; font-size: 16px; }
+    main { max-width: 800px; margin: 30px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    h2 { color: #003366; margin-bottom: 20px; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    select, input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 6px; }
+    button { margin-top: 20px; background-color: #0055cc; color: white; padding: 12px 25px; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 10px 0; padding: 10px; background: #eef; border-radius: 6px; }
+    .remove { color: red; cursor: pointer; float: right; }
   </style>
 </head>
 <body>
+  <header>
+    <h1>CHAVARRI GLOBAL SERVICES</h1>
+  </header>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="sobre.html">Sobre Nosotros</a>
+    <a href="contacto.html">Contáctenos</a>
+  </nav>
+  <main>
+    <h2>Solicitar Servicios Notariales</h2>
+    <form id="formNotaria">
+      <label for="nombre">Nombre del solicitante:</label>
+      <input type="text" id="nombre" required pattern="[A-Za-záéíóúÁÉÍÓÚñÑ ]+" placeholder="Ej: Juan Pérez">
 
-<header>
-  <h1>CHAVARRI GLOBAL SERVICES</h1>
-</header>
-
-<nav>
-  <a href="index.html">Inicio</a>
-  <a href="sobre.html">Sobre Nosotros</a>
-  <a href="contacto.html">Contáctenos</a>
-</nav>
-
-<main>
-  <h2>Solicitar Servicios Notariales</h2>
-
-  <form id="notariaForm">
-    <label for="nombre">Nombre del solicitante:</label>
-    <input type="text" id="nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Solo letras y espacios" />
-
-    <label for="telefono">Teléfono del solicitante:</label>
-    <div class="telefono">
-      <span>+1</span>
-      <input type="tel" id="telefono" maxlength="10" pattern="[0-9]{10}" required title="Solo números (10 dígitos)" />
-    </div>
-
-    <label for="servicio">Servicio:</label>
-    <div class="row">
-      <div>
-        <select id="servicio" onchange="verificarCantidad()">
-          <option value="">Seleccione un servicio</option>
-          <option value="Permiso de Trabajo:100">Permiso de Trabajo ($100)</option>
-          <option value="Residencia:250">Residencia ($250)</option>
-          <option value="Ciudadanía:300">Ciudadanía ($300)</option>
-          <option value="Permiso Bajos Recursos:0">Permiso por Bajos Recursos (Precio variable)</option>
-          <option value="Visa Fiancé:250">Visa Fianc(é)e ($250)</option>
-          <option value="Fiancé + Hijos:250:extra">Fiancé + Hijo(s) ($250 + $100 por hijo)</option>
-          <option value="Reclamación:0">Reclamación (Precio variable)</option>
-          <option value="Parole Humanitario:150">Parole Humanitario ($150)</option>
-          <option value="Notarización:10:doc">Notarización de Documentos ($10 c/u)</option>
-          <option value="Traducción:25:doc">Traducción de Documentos ($25 c/u)</option>
+      <label for="telefono">Teléfono:</label>
+      <div style="display: flex; gap: 10px;">
+        <select id="prefijo" style="flex: 1">
+          <option value="+53">+53 (Cuba)</option>
+          <option value="+1">+1 (EE.UU / Canadá)</option>
+          <option value="+34">+34 (España)</option>
+          <option value="+55">+55 (Brasil)</option>
         </select>
+        <input type="tel" id="telefono" style="flex: 3" required pattern="[0-9]{6,12}" placeholder="Ej: 53143050">
       </div>
-      <div>
-        <input type="number" id="cantidad" placeholder="Cantidad" min="1" disabled />
-      </div>
-      <div>
-        <button type="button" class="boton" onclick="agregarServicio()">Agregar</button>
-      </div>
-    </div>
 
-    <div class="resumen" id="resumen">
-      <strong>Servicios seleccionados:</strong><br>
-      <em>No hay servicios añadidos aún.</em>
-    </div>
+      <label for="servicio">Seleccionar servicio:</label>
+      <select id="servicio">
+        <option value="Permiso de Trabajo">Permiso de Trabajo ($100)</option>
+        <option value="Residencia">Residencia ($250)</option>
+        <option value="Ciudadanía">Ciudadanía ($300)</option>
+        <option value="Permiso de Trabajo - Perdón">Permiso de Trabajo - Perdón</option>
+        <option value="Visa K-1">Visa Fiancé(e) ($250)</option>
+        <option value="Visa K-1 con hijos">Visa Fiancé(e) + Hijos</option>
+        <option value="Reclamación">Reclamación</option>
+        <option value="Parole Humanitario">Parole Humanitario ($150)</option>
+        <option value="Notarización de documentos">Notarización de Documentos ($10 c/u)</option>
+        <option value="Traducción">Traducción ($25 c/u)</option>
+      </select>
 
-    <button type="submit" class="boton">Solicitar por WhatsApp</button>
-  </form>
-</main>
+      <label for="cantidad">Cantidad de documentos:</label>
+      <input type="number" id="cantidad" value="1" min="1" disabled>
 
-<footer>
-  <p>&copy; 2025 Chavarri GS. Todos los derechos reservados.</p>
-</footer>
+      <button type="button" onclick="agregarServicio()">Añadir Servicio</button>
+      <ul id="listaServicios"></ul>
+      <h3 id="total">Total: $0</h3>
 
-<script>
-  let serviciosElegidos = [];
+      <button type="submit">Solicitar por WhatsApp</button>
+    </form>
+  </main>
 
-  function verificarCantidad() {
-    const servicio = document.getElementById("servicio").value;
-    const partes = servicio.split(":");
-    const cantidadInput = document.getElementById("cantidad");
-    const tipo = partes[2];
+  <script>
+    const lista = document.getElementById("listaServicios");
+    const totalDisplay = document.getElementById("total");
+    let servicios = [];
 
-    if (tipo === "doc" || tipo === "extra") {
-      cantidadInput.disabled = false;
-      cantidadInput.required = true;
-    } else {
-      cantidadInput.value = "";
-      cantidadInput.disabled = true;
-      cantidadInput.required = false;
-    }
-  }
+    const precios = {
+      "Permiso de Trabajo": 100,
+      "Residencia": 250,
+      "Ciudadanía": 300,
+      "Parole Humanitario": 150,
+      "Notarización de documentos": 10,
+      "Traducción": 25,
+      "Visa K-1": 250
+    };
 
-  function agregarServicio() {
-    const sel = document.getElementById("servicio").value;
-    const cantidadInput = document.getElementById("cantidad");
-    const partes = sel.split(":");
-
-    if (!sel) return;
-
-    const nombre = partes[0];
-    const precioBase = parseFloat(partes[1]);
-    const tipo = partes[2];
-    const cantidad = tipo ? parseInt(cantidadInput.value) : 1;
-
-    if (tipo && (!cantidad || cantidad < 1)) {
-      alert("Debe ingresar una cantidad válida.");
-      return;
-    }
-
-    let precioTotal = precioBase;
-    let precioDetalle = `$${precioBase}`;
-    if (tipo === "doc") {
-      precioTotal = precioBase * cantidad;
-      precioDetalle = `$${precioBase}`;
-    } else if (tipo === "extra") {
-      precioTotal = precioBase + (100 * cantidad);
-      precioDetalle = `$250 + $100 x ${cantidad}`;
-    }
-
-    serviciosElegidos.push({
-      id: Date.now(),
-      nombre,
-      precio: precioDetalle,
-      cantidad,
-      total: precioTotal.toFixed(2)
+    document.getElementById("servicio").addEventListener("change", function() {
+      const val = this.value;
+      const cantidadInput = document.getElementById("cantidad");
+      if (val === "Notarización de documentos" || val === "Traducción" || val === "Visa K-1 con hijos") {
+        cantidadInput.disabled = false;
+      } else {
+        cantidadInput.disabled = true;
+        cantidadInput.value = 1;
+      }
     });
 
-    document.getElementById("cantidad").value = "";
-    actualizarResumen();
-  }
+    function agregarServicio() {
+      const servicio = document.getElementById("servicio").value;
+      const cantidad = parseInt(document.getElementById("cantidad").value);
+      let costo = 0;
 
-  function eliminarServicio(id) {
-    serviciosElegidos = serviciosElegidos.filter(s => s.id !== id);
-    actualizarResumen();
-  }
+      if (servicio === "Visa K-1 con hijos") {
+        costo = 250 + 100 * (cantidad - 1);
+      } else if (precios[servicio]) {
+        costo = precios[servicio] * cantidad;
+      } else {
+        costo = 0;
+      }
 
-  function actualizarResumen() {
-    const resumen = document.getElementById("resumen");
-    if (serviciosElegidos.length === 0) {
-      resumen.innerHTML = "<strong>Servicios seleccionados:</strong><br><em>No hay servicios añadidos aún.</em>";
-      return;
+      const item = { servicio, cantidad, costo };
+      servicios.push(item);
+      actualizarLista();
     }
 
-    let html = "<strong>Servicios seleccionados:</strong><ul>";
-    let total = 0;
-    serviciosElegidos.forEach(serv => {
-      html += `<li>${serv.nombre} (${serv.cantidad} x ${serv.precio}) = $${serv.total} 
-               <button class="eliminar" onclick="eliminarServicio(${serv.id})">❌</button></li>`;
-      total += parseFloat(serv.total);
-    });
-    html += `</ul><strong>Total estimado: $${total.toFixed(2)}</strong>`;
-    resumen.innerHTML = html;
-  }
-
-  document.getElementById("nombre").addEventListener("input", function () {
-    this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ ]/g, "");
-  });
-
-  document.getElementById("telefono").addEventListener("input", function () {
-    this.value = this.value.replace(/[^0-9]/g, "");
-  });
-
-  document.getElementById("notariaForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const nombre = document.getElementById("nombre").value.trim();
-    const telefono = document.getElementById("telefono").value.trim();
-
-    if (serviciosElegidos.length === 0) {
-      alert("Debe agregar al menos un servicio.");
-      return;
+    function eliminarServicio(index) {
+      servicios.splice(index, 1);
+      actualizarLista();
     }
 
-    let mensaje = `Hola, soy ${nombre}, teléfono +1${telefono}. Deseo los siguientes servicios:\n`;
-    let total = 0;
+    function actualizarLista() {
+      lista.innerHTML = "";
+      let total = 0;
+      servicios.forEach((s, i) => {
+        total += s.costo;
+        lista.innerHTML += `<li>${s.servicio} (${s.cantidad}) - $${s.costo} <span class="remove" onclick="eliminarServicio(${i})">✕</span></li>`;
+      });
+      totalDisplay.textContent = `Total: $${total}`;
+    }
 
-    serviciosElegidos.forEach(serv => {
-      mensaje += `- ${serv.nombre} (${serv.cantidad} x ${serv.precio}) = $${serv.total}\n`;
-      total += parseFloat(serv.total);
+    document.getElementById("formNotaria").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const nombre = document.getElementById("nombre").value;
+      const prefijo = document.getElementById("prefijo").value;
+      const telefono = document.getElementById("telefono").value;
+      const numero = `${prefijo}${telefono}`;
+
+      let mensaje = `Hola, soy ${nombre}. Deseo solicitar los siguientes servicios:\n`;
+      servicios.forEach(s => {
+        mensaje += `- ${s.servicio} (${s.cantidad}): $${s.costo}\n`;
+      });
+      mensaje += totalDisplay.textContent;
+
+      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank');
     });
-
-    mensaje += `\nTotal estimado: $${total.toFixed(2)}`;
-    window.open(`https://wa.me/5353143050?text=${encodeURIComponent(mensaje)}`, "_blank");
-  });
-</script>
-
+  </script>
 </body>
 </html>
